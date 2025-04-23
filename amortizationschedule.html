@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Amortization Visualizer</title>
+
+    <!-- STYLING -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            width: 250px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid #ddd;
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .result-container {
+            margin-top: 20px;
+        }
+
+        /* Style the form container to allow horizontal layout */
+        .form-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        /* Style the button */
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Center the Go to Scratch Page button */
+        .center-btn {
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Loan Amortization Visualizer</h1>
+
+        <!-- Button to go back to the Scratch page, centered -->
+        <div class="center-btn">
+            <a href="scratch.html">
+                <button class="btn btn-primary btn-lg">Go to Scratch Page</button>
+            </a>
+        </div>
+
+        <!-- Loan Input Form -->
+        <form id="loanForm">
+            <div class="form-container">
+                <div>
+                    <label for="loanAmount">Loan Amount ($):</label>
+                    <input type="number" id="loanAmount" required />
+                </div>
+                <div>
+                    <label for="interestRate">Annual Interest Rate (%):</label>
+                    <input type="number" id="interestRate" step="0.01" min="0" required />
+                </div>
+                <div>
+                    <label for="loanTerm">Loan Term (years):</label>
+                    <input type="number" id="loanTerm" required />
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-lg" type="submit">Generate Amortization Schedule</button>
+                </div>
+            </div>
+
+        </form>
+
+        <!-- Amortization Results -->
+        <div class="result-container" id="resultContainer" style="display:none;">
+            <h2>Amortization Schedule</h2>
+            <table id="amortizationTable">
+                <thead>
+                    <tr>
+                        <th>Month</th>
+                        <th>Payment</th>
+                        <th>Principal</th>
+                        <th>Interest</th>
+                        <th>Remaining Balance</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Amortization table rows will be inserted here -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Loan amortization calculation function
+        function calculateAmortization(loanAmount, annualInterestRate, loanTerm) {
+            const monthlyInterestRate = (annualInterestRate / 100) / 12;
+            const numberOfPayments = loanTerm * 12;
+
+            // Monthly payment formula
+            const monthlyPayment = loanAmount * monthlyInterestRate / (1 - Math.pow(1 + monthlyInterestRate, -numberOfPayments));
+
+            const schedule = [];
+            let balance = loanAmount;
+
+            for (let month = 1; month <= numberOfPayments; month++) {
+                const interestPayment = balance * monthlyInterestRate;
+                const principalPayment = monthlyPayment - interestPayment;
+                balance -= principalPayment;
+
+                // Add row to schedule
+                schedule.push({
+                    month: month,
+                    payment: monthlyPayment.toFixed(2),
+                    principal: principalPayment.toFixed(2),
+                    interest: interestPayment.toFixed(2),
+                    balance: balance.toFixed(2)
+                });
+            }
+
+            return schedule;
+        }
+
+        // Handle form submission and display results
+        document.getElementById("loanForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const loanAmount = parseFloat(document.getElementById("loanAmount").value);
+            const interestRate = parseFloat(document.getElementById("interestRate").value);
+            const loanTerm = parseInt(document.getElementById("loanTerm").value);
+
+            // Calculate amortization schedule
+            const amortizationSchedule = calculateAmortization(loanAmount, interestRate, loanTerm);
+
+            // Display results
+            const resultContainer = document.getElementById("resultContainer");
+            const amortizationTable = document.getElementById("amortizationTable").getElementsByTagName('tbody')[0];
+
+            // Clear any previous results
+            amortizationTable.innerHTML = "";
+
+            amortizationSchedule.forEach(row => {
+                const newRow = amortizationTable.insertRow();
+                newRow.innerHTML = `<td>${row.month}</td><td>${row.payment}</td><td>${row.principal}</td><td>${row.interest}</td><td>${row.balance}</td>`;
+            });
+
+            resultContainer.style.display = "block"; // Show results
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,135 @@
+.header {
+    background-color: rgba(66, 41, 41, 0.9);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.header a {
+    color: white;
+    text-decoration: none;
+}
+
+.header a:hover {
+    text-decoration: underline;
+}
+
+h1 {
+    font-weight: bold;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h3 {
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.niceborders {
+    border: 2px solid black;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+    width: 600px;
+    background-color: #f7e7ce;
+}
+
+.videoformatting {
+    display: flex;
+    width: 560px;
+    align-items: center;
+}
+
+.flexrow {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 10px;
+    margin-left: 220px;
+    margin-right: 20px;
+}
+
+
+.tableau-container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 40px auto;
+    border: 5px solid black;
+}
+
+.highlight-box {
+    border: 3px solid black;
+    background-color: #f7e7ce;
+    padding: 10px;
+    border-radius: 8px;
+    width: fit-content;
+    margin: 20px auto;
+}
+
+.highlight-box a {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.highlight-box h1 {
+    font-size: 24px; /* Adjusts the size of the heading */
+}
+
+/* Position the TOC on the left */
+.toc {
+    position: fixed;
+    top: 100px;
+    left: 20px;
+    width: 200px;
+    background-color: #f7f7f7;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    font-family: Arial, sans-serif;
+}
+
+.toc h3 {
+    margin-top: 0;
+}
+
+.toc ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.toc li {
+    margin: 10px 0;
+}
+
+.toc a {
+    text-decoration: none;
+    color: #333;
+}
+
+.toc a:hover {
+    color: #0077cc;
+    text-decoration: underline;
+}
+
+.jamie-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.jamie-img {
+    border: 4px solid #000;
+    border-radius: 10px;
+    max-width: 80%;
+    height: auto;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    background-color: #b8b8b8; /* Replace with your desired color */
+}
